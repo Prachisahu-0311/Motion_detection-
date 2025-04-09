@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 import os
 import tempfile
-from google.colab.patches import cv2_imshow  # For Google Colab visualization
 
 # Function to process video frames
 def process_video(video_path):
@@ -73,7 +72,9 @@ if uploaded_video is not None:
     if processed_frames is not None:
         # Display processed frames in the app
         for frame in processed_frames:
-            st.image(frame, channels="BGR", use_column_width=True)
+            # Convert BGR to RGB for Streamlit compatibility
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            st.image(frame_rgb, channels="RGB", use_column_width=True)
 
         # Save the processed frames into a video
         output_video_path = "/content/processed_output_video.avi"
